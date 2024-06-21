@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Game Menu</title>
+        <script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script>
+        <script>
+            function start() {
+                sjs.open("target", 900, 700);
+                var menu_text = new sjs.Text("MENU", 28, "blue");
+                menu_text.centerH();
+                var startBtne = new sjs.Button("play pong", function () {
+                    window.location = "pong.html"
+                    
+            })
+            startBtne.centerH()
+        }
+        </script>
+    </head>
+    <body onload="start()">
+    <h1><center>wightman games Menu</center></h1>
+    <div id="target" style="margin:auto;background:rgb(3, 247, 214);"></div>
+    </body>
+</html>
