@@ -1,0 +1,95 @@
+<html>
+    <head>
+        <title>pong</title>
+        <script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script>
+        <script>
+            function game() {
+                sjs.open("target", 1400, 800)
+
+                var game_text = new sjs.Text("use the arrow keys, A key, and D key to play", 28, "#ffo")
+                game_text.centerH().offset(0,30);
+
+                //ball code
+                var ball = new sjs.Image("Images/golfball.png")
+                ball.setSize(50, 50)
+                ball.type = "ball";
+                ball.center();
+                ball.friction = 0;
+                ball.bounce();
+                ball.pushUp(8);
+                ball.pushLeft(6)
+
+                //paddle code
+                var paddle = new sjs.Image("Images/paddle.png")
+                paddle.type = "paddle";
+                paddle.centerH();
+                paddle.setSize(150, 20)
+
+                //paddle2 code
+                var paddle2 = new sjs.Image("Images/paddle2.png")
+                paddle2.type = "paddle";
+                paddle2.bottom().centerH();
+                paddle2.setSize(150, 20);
+
+                //score
+                var score = 3;
+                var score_2 = 3;
+                var score_txt = new sjs.Text("blue lives: 3", 21, "black");
+                var score_txt2 = new sjs.Text("red lives: 3", 21, "black");
+                score_txt2.bottom()
+               
+                sjs.keyDown(LEFT_KEY, function(){
+                    paddle2.pushLeft();
+            });
+
+            sjs.keyDown(A_KEY, function(){
+                paddle.pushLeft();
+            });
+
+            sjs.keyDown(D_KEY, function(){
+                    paddle.pushRight();
+            });
+            sjs.keyDown(RIGHT_KEY, function(){
+            paddle2.pushRight();
+        })
+
+        var soundEffect = new Audio("Music/reminder.mp3");
+
+        sjs.onHit("ball", "top_screen", function(ball, screenTop) {
+            console.log('hit top')
+            score = score - 1
+            score_txt.setText("blue lives: " + score);
+            sjs.bounceOff(ball, screenTop)
+            if (score == 0) {window.location = "gameover2.html"}
+            if (score_2 ==0) {window.location = "gameover.html"}
+        })
+
+        sjs.onHit("ball", "bottom_screen", function(ball, screenBottom) {
+            console.log('hit bottom');
+            score_2 = score_2 - 1
+            score_txt2.setText("red lives:" + score_2);
+            sjs.bounceOff(ball, screenBottom)
+            if (score == 0) {window.location = "gameover2.html"}
+            if (score_2 ==0) {window.location = "gameover.html"}
+        })
+
+        sjs.onHit("ball", "paddle", function(ball, paddle){
+            soundEffect.play();
+            sjs.bounceOff(ball, paddle)
+        });
+
+        
+        var startBtne = new sjs.Button("back to menu", function () {
+                    window.location = "index.html"
+            })
+        startBtne.right()
+    }
+        </script>
+    </head>
+    <body onload="game()">
+        <center>
+        <h1>pong game</h1>
+        </center>
+        <div id="target" style="margin:auto;background:grey;"></div>
+    </body>
+</html>
